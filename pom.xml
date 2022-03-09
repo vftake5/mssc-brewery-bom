@@ -47,7 +47,7 @@
     <scm>
         <connection>scm:git:git://github.com/vftake5/mssc-brewery-bom.git</connection>
         <developerConnection>scm:git:ssh://github.com:vftake5/mssc-brewery-bom.git</developerConnection>
-        <url>http://github.com/vftake5/mssc-brewery-bom/tree/master</url>
+        <url>https://github.com/vftake5/mssc-brewery-bom/tree/master</url>
     </scm>
 
     <properties>
@@ -200,11 +200,11 @@
             <scope>test</scope>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--            <version>2.6.4</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.sonatype.plugins</groupId>
+            <artifactId>nexus-staging-maven-plugin</artifactId>
+            <version>1.6.7</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
@@ -307,12 +307,12 @@
     <profiles>
         <profile>
             <id>BOM_release</id>
-            <activation>
-                <property>
-                    <name>performRelease</name>
-                    <value>true</value>
-                </property>
-            </activation>
+<!--            <activation>-->
+<!--                <property>-->
+<!--                    <name>performRelease</name>-->
+<!--                    <value>true</value>-->
+<!--                </property>-->
+<!--            </activation>-->
             <build>
                 <plugins>
                     <plugin>
@@ -328,6 +328,17 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>1.6.7</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
